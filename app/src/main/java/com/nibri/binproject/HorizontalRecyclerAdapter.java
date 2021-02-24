@@ -13,24 +13,24 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-public class HorizontalRecyclerAdapter extends RecyclerView.Adapter<HorizontalRecyclerAdapter.ViewHolderCouponData> {
+public class HorizontalRecyclerAdapter extends RecyclerView.Adapter<HorizontalRecyclerAdapter.ViewHolderCoupon> {
 
-    private final List<CouponData> couponDataList;
+    private final List<CouponData> couponList;
 
-    public HorizontalRecyclerAdapter(List<CouponData> couponDataList) {
-        this.couponDataList = couponDataList;
+    public HorizontalRecyclerAdapter(List<CouponData> couponList) {
+        this.couponList = couponList;
     }
 
     @NonNull
     @Override
-    public ViewHolderCouponData onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolderCoupon onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_coupon_tile, parent, false);
-        return new ViewHolderCouponData(itemView);
+        return new ViewHolderCoupon(itemView);
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolderCouponData holder, final int position) {
-        CouponData c = couponDataList.get(position);
+    public void onBindViewHolder(final ViewHolderCoupon holder, final int position) {
+        CouponData c = couponList.get(position);
         holder.serviceName.setText(c.service);
         holder.title.setText(c.title);
         Utils.setHtml(holder.info, c.info);
@@ -61,13 +61,13 @@ public class HorizontalRecyclerAdapter extends RecyclerView.Adapter<HorizontalRe
 
     @Override
     public int getItemCount() {
-        return couponDataList.size();
+        return couponList.size();
     }
 
-    public static class ViewHolderCouponData extends RecyclerView.ViewHolder {
+    public static class ViewHolderCoupon extends RecyclerView.ViewHolder {
         TextView serviceName, title, info, code;
 
-        public ViewHolderCouponData(View view) {
+        public ViewHolderCoupon(View view) {
             super(view);
             serviceName = view.findViewById(R.id.tv_service_name);
             title = view.findViewById(R.id.tv_title);
