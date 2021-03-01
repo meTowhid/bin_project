@@ -1,7 +1,7 @@
-package com.nibri.binproject;
+package com.nibri.binproject.model;
 
-class CouponData {
-    String service, title, info, code;
+public class CouponData {
+    public String service, title, info, code;
 
     public CouponData(String service, String title, String info, String code) {
         this.service = service;

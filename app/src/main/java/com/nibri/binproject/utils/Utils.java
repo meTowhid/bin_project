@@ -1,4 +1,4 @@
-package com.nibri.binproject;
+package com.nibri.binproject.utils;
 
 import android.content.ClipData;
 import android.content.ClipboardManager;
@@ -9,7 +9,7 @@ import android.util.TypedValue;
 import android.widget.TextView;
 import android.widget.Toast;
 
-class Utils {
+public class Utils {
     public static void setHtml(TextView textView, String text) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             textView.setText(Html.fromHtml(text, Html.FROM_HTML_MODE_COMPACT));

@@ -1,4 +1,4 @@
-package com.nibri.binproject;
+package com.nibri.binproject.adapters;
 
 
 import androidx.annotation.NonNull;
@@ -6,18 +6,19 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
+import com.nibri.binproject.StoryPageFragment;
+import com.nibri.binproject.model.StoryData;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class StoryPagerAdapter extends FragmentStatePagerAdapter {
     private final List<StoryData> storyData;
-    private final StoryPageFragment.Callback onTimerFinishCallback;
     private final List<StoryPageFragment> fragments;
 
     public StoryPagerAdapter(FragmentManager fm, List<StoryData> storyData, StoryPageFragment.Callback onTimerFinishCallback) {
         super(fm, FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         this.storyData = storyData;
-        this.onTimerFinishCallback = onTimerFinishCallback;
 
         fragments = new ArrayList<>();
         for (StoryData story : storyData) {

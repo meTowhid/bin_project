@@ -15,6 +15,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
+import com.nibri.binproject.model.StoryData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,7 +57,10 @@ public class StoryPageFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        initView(view);
+    }
 
+    public void initView(View view) {
         ivSlide = view.findViewById(R.id.iv_slide);
         ivProfile = view.findViewById(R.id.iv_profile);
         tvTitle = view.findViewById(R.id.tv_title);
@@ -67,19 +71,20 @@ public class StoryPageFragment extends Fragment {
                 callback.onTimerFinishCallback(true);
                 resetAll();
             } else {
-                startTime = System.currentTimeMillis() - currentImageIndex * perImageDelayInMileSeconds;
                 currentImageIndex++;
+                startTime = System.currentTimeMillis() - currentImageIndex * perImageDelayInMileSeconds;
                 loadImage();
                 startTimer();
             }
         });
+
         view.findViewById(R.id.viewPrev).setOnClickListener((v) -> {
             if (currentImageIndex == 0) {
                 callback.onTimerFinishCallback(false);
                 resetAll();
             } else {
-                startTime = System.currentTimeMillis() - currentImageIndex * perImageDelayInMileSeconds;
                 currentImageIndex--;
+                startTime = System.currentTimeMillis() - currentImageIndex * perImageDelayInMileSeconds;
                 loadImage();
                 startTimer();
             }
@@ -113,12 +118,17 @@ public class StoryPageFragment extends Fragment {
             System.out.println("changing image to: " + currentImageIndex);
         }
 
+        if (progressIndicators == null) {
+            System.out.println("Null progress indicators");
+            return;
+        }
+
         for (int i = 0; i < progressIndicators.size(); i++) {
             if (currentImageIndex == i) {
                 double elapsedTimeForImage = elapsedTime - perImageDelayInMileSeconds * currentImageIndex;
                 int progress = (int) ((elapsedTimeForImage / perImageDelayInMileSeconds) * 100.0);
                 progressIndicators.get(i).setProgress(progress);
-                System.out.println("progress: " + progress + ", elapsedTimeForImage: " + elapsedTimeForImage);
+//                System.out.println("progress: " + progress + ", elapsedTimeForImage: " + elapsedTimeForImage);
             } else
                 progressIndicators.get(i).setProgress(currentImageIndex > i ? 100 : 0);
         }
@@ -137,8 +147,10 @@ public class StoryPageFragment extends Fragment {
         }
     }
 
-    void startTimer() {
+    public void startTimer() {
+        System.out.println("starting timer");
         if (playTimer != null) return; // timer is already running
+        System.out.println("timer already started!");
 
         startTime = System.currentTimeMillis();
 
@@ -156,6 +168,7 @@ public class StoryPageFragment extends Fragment {
         if (playTimer != null) {
             playTimer.cancel();
             playTimer.purge();
+            playTimer = null;
         }
     }
 
@@ -165,12 +178,12 @@ public class StoryPageFragment extends Fragment {
         resetAll();
     }
 
-    void resetAll() {
+    public void resetAll() {
         stopTimer();
         currentImageIndex = 0;
     }
 
-    interface Callback {
+    public interface Callback {
         void onTimerFinishCallback(boolean isForeword);
     }
 }

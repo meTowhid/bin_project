@@ -1,4 +1,4 @@
-package com.nibri.binproject;
+package com.nibri.binproject.adapters;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +12,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.nibri.binproject.R;
+import com.nibri.binproject.model.StoryData;
 
 import java.util.List;
 
@@ -78,7 +80,7 @@ public class StoryRecyclerAdapter extends RecyclerView.Adapter<StoryRecyclerAdap
         }
     }
 
-    interface Callback {
+    public interface Callback {
         void onTapStory(int index);
     }
 }

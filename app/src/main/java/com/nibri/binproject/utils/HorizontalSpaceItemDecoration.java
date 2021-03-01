@@ -1,4 +1,4 @@
-package com.nibri.binproject;
+package com.nibri.binproject.utils;
 
 import android.graphics.Rect;
 import android.view.View;

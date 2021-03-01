@@ -1,4 +1,4 @@
-package com.nibri.binproject;
+package com.nibri.binproject.adapters;
 
 import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
@@ -10,6 +10,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.TooltipCompat;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.nibri.binproject.R;
+import com.nibri.binproject.model.CouponData;
+import com.nibri.binproject.utils.Utils;
 
 import java.util.List;
 

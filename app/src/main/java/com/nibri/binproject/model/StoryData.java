@@ -1,10 +1,10 @@
-package com.nibri.binproject;
+package com.nibri.binproject.model;
 
 import java.util.List;
 
-class StoryData {
-    String title;
-    List<String> images;
+public class StoryData {
+    public String title;
+    public List<String> images;
 
     public StoryData(String title, List<String> images) {
         this.title = title;
