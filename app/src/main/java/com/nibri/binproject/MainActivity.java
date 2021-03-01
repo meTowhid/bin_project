@@ -42,9 +42,8 @@ public class MainActivity extends AppCompatActivity {
         recyclerView2.setLayoutManager(layoutManager2);
 
 
-        StoryRecyclerAdapter storyAdapter = new StoryRecyclerAdapter(DummyData.storyData(), (index) -> {
+        StoryRecyclerAdapter storyAdapter = new StoryRecyclerAdapter(DummyData.storyDataFromJson(), (index) -> {
             System.out.println("index: " + index);
-//            showStoryDialog(index);
             Intent intent = new Intent(this, StoryActivity.class);
             intent.putExtra("itemIndex", index);
             startActivity(intent);

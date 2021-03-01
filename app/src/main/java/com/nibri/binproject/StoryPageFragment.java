@@ -67,13 +67,13 @@ public class StoryPageFragment extends Fragment {
         tvSubTitle = view.findViewById(R.id.tv_subtitle);
 
         view.findViewById(R.id.viewNext).setOnClickListener((v) -> {
-            if (currentImageIndex == story.images.size() - 1) {
+            if (currentImageIndex == story.stories.size() - 1) {
                 callback.onTimerFinishCallback(true);
                 resetAll();
             } else {
                 currentImageIndex++;
                 startTime = System.currentTimeMillis() - currentImageIndex * perImageDelayInMileSeconds;
-                loadImage();
+                loadSlide();
                 startTimer();
             }
         });
@@ -85,21 +85,21 @@ public class StoryPageFragment extends Fragment {
             } else {
                 currentImageIndex--;
                 startTime = System.currentTimeMillis() - currentImageIndex * perImageDelayInMileSeconds;
-                loadImage();
+                loadSlide();
                 startTimer();
             }
         });
 
-        String profile = "https://www.pinclipart.com/picdir/middle/221-2214756_lim-green-screen-circle-png-clipart.png";
-        Glide.with(Objects.requireNonNull(getContext())).load(profile).into(ivProfile);
         buildProgressIndicators(view);
-        tvTitle.setText(story.title);
-        loadImage();
+        loadSlide();
     }
 
-    private void loadImage() {
-        String url = story.images.get(currentImageIndex);
-        Glide.with(Objects.requireNonNull(getContext())).load(url).into(ivSlide);
+    private void loadSlide() {
+        StoryData.StoryItem slide = story.stories.get(currentImageIndex);
+        tvTitle.setText(slide.title);
+        tvSubTitle.setText(slide.description);
+        Glide.with(Objects.requireNonNull(getContext())).load(slide.imgUrl).into(ivSlide);
+        Glide.with(Objects.requireNonNull(getContext())).load(slide.thumbURL).into(ivProfile);
     }
 
     private void updateIndicators() {
@@ -107,14 +107,14 @@ public class StoryPageFragment extends Fragment {
 //        System.out.println("elapsed time: " + elapsedTime + ", currentImage: " + (currentImageIndex + 1) + "/" + story.images.size());
 
 
-        if (elapsedTime >= perImageDelayInMileSeconds * story.images.size()) {
+        if (elapsedTime >= perImageDelayInMileSeconds * story.stories.size()) {
             resetAll();
             callback.onTimerFinishCallback(true);
             System.out.println("timer finished");
             return;
         } else if (elapsedTime > (currentImageIndex + 1) * perImageDelayInMileSeconds) {
             currentImageIndex++;
-            loadImage();
+            loadSlide();
             System.out.println("changing image to: " + currentImageIndex);
         }
 
@@ -138,8 +138,8 @@ public class StoryPageFragment extends Fragment {
     public void buildProgressIndicators(View view) {
         LinearLayout progressViewHolder = view.findViewById(R.id.ll_progress);
         progressIndicators = new ArrayList<>();
-        if (story.images.size() == 0) progressViewHolder.setVisibility(View.INVISIBLE);
-        else for (int i = 0; i < story.images.size(); i++) {
+        if (story.stories.size() == 0) progressViewHolder.setVisibility(View.INVISIBLE);
+        else for (int i = 0; i < story.stories.size(); i++) {
             View pbView = LayoutInflater.from(view.getContext()).inflate(R.layout.view_story_progress, null, false);
             pbView.setLayoutParams(params);
             progressViewHolder.addView(pbView);

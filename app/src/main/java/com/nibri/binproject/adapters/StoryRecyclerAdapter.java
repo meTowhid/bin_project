@@ -29,7 +29,7 @@ public class StoryRecyclerAdapter extends RecyclerView.Adapter<StoryRecyclerAdap
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolderStory holder, int position, @NonNull List<Object> payloads) {
-        holder.buildProgressIndicators(holder.itemView, stories.get(position).images.size());
+        holder.buildProgressIndicators(holder.itemView, stories.get(position).stories.size());
         super.onBindViewHolder(holder, position, payloads);
     }
 
@@ -45,7 +45,7 @@ public class StoryRecyclerAdapter extends RecyclerView.Adapter<StoryRecyclerAdap
         StoryData story = stories.get(position);
         holder.textView.setText(story.title);
         holder.itemView.setOnClickListener(v -> callback.onTapStory(position));
-        Glide.with(holder.itemView.getContext()).load(story.images.get(0)).into(holder.imageView);
+        Glide.with(holder.itemView.getContext()).load(story.profileImage).into(holder.imageView);
     }
 
     @Override

@@ -32,9 +32,9 @@ public class StoryActivity extends AppCompatActivity {
     }
 
     void setupViewPager() {
-        storyPagerAdapter = new StoryPagerAdapter(getSupportFragmentManager(), DummyData.storyData(), (boolean isForeword) -> {
+        storyPagerAdapter = new StoryPagerAdapter(getSupportFragmentManager(), DummyData.storyDataFromJson(), (boolean isForeword) -> {
             boolean isFirst = viewPager.getCurrentItem() == 0;
-            boolean isLast = viewPager.getCurrentItem() == DummyData.storyData().size() - 1;
+            boolean isLast = viewPager.getCurrentItem() == DummyData.storyDataFromJson().size() - 1;
             if ((isFirst && !isForeword) || (isLast && isForeword)) finish();
             else {
                 int newIndex = viewPager.getCurrentItem() + (isForeword ? 1 : -1);
