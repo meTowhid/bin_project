@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    
+    <androidx.cardview.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="10dp">
+
+        <RelativeLayout
+            android:layout_width="148dp"
+            android:layout_height="201dp"
+            android:background="@drawable/bg"
+            android:orientation="vertical">
+
+
+            <ImageView
+                android:id="@+id/banner"
+                android:layout_width="148dp"
+                android:layout_height="104dp"
+                />
+
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="10dp"
+                android:layout_alignBottom="@id/banner">
+
+                <TextView
+                    android:id="@+id/badge_notification_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@android:drawable/ic_notification_overlay"
+                    android:gravity="center"
+                    android:lineHeight="6sp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:text="Free Delivery"
+                    android:textColor="#FFF"
+                    android:textSize="8sp" />
+
+            </FrameLayout>
+
+
+            <RelativeLayout
+                android:id="@+id/linlay"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/banner"
+                android:orientation="vertical">
+
+
+                <TextView
+                    android:id="@+id/item_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="sans-serif"
+                    android:lineHeight="16dp"
+                    android:text="Almond Milk"
+                    android:textColor="#333333"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:id="@+id/item_restaurant_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/item_title"
+                    android:layout_marginStart="10dp"
+                    android:fontFamily="sans-serif"
+                    android:lineHeight="16dp"
+                    android:text="North End Coffee Roast..."
+                    android:textColor="#707070"
+                    android:textSize="11sp" />
+
+                <TextView
+
+                    android:id="@+id/item_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_below="@id/item_restaurant_name"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:fontFamily="sans-serif"
+                    android:gravity="bottom"
+                    android:lineHeight="15sp"
+                    android:text="৳ 200"
+                    android:textColor="#333333"
+                    android:textSize="14sp" />
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+
+    </androidx.cardview.widget.CardView>
+
+</layout>
