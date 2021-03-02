@@ -89,6 +89,18 @@ public class Datum {
     @Expose
     private Action action;
 
+
+    private boolean isMoreAvailable = false;
+
+    public boolean isMoreAvailable() {
+        return isMoreAvailable;
+    }
+
+    public void setMoreAvailable(boolean moreAvailable) {
+        isMoreAvailable = moreAvailable;
+    }
+
+
     public String getTitle() {
         return title;
     }

@@ -6,11 +6,12 @@ import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.Gson;
 import com.nibri.binproject.adapters.HorizontalRecyclerAdapter;
+import com.nibri.binproject.adapters.ServiceListAdapter;
 import com.nibri.binproject.adapters.StatisticsAdapter;
 import com.nibri.binproject.adapters.StoryRecyclerAdapter;
 import com.nibri.binproject.databinding.ActivityMainBinding;
@@ -35,8 +36,26 @@ public class MainActivity extends AppCompatActivity {
         initRecyclerView();
         initCouponView();
         initMileStoneView();
+        initServiceList();
 
     }
+
+    private void initServiceList() {
+
+        List<Datum> list;
+        list = getData("grid");
+
+        if (list.size() >= 6) {
+            list.add(getMoreVertical());
+        }
+
+        Log.v(TAG, "list size : "+list.size());
+
+
+        binding.recyclerViewMileStone.setLayoutManager(new GridLayoutManager(this, 4));
+        binding.recyclerViewMileStone.setAdapter(new ServiceListAdapter(list));
+    }
+
 
     private void initMileStoneView() {
         binding.recyclerViewMileStone.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
@@ -66,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-/*    private void showStoryDialog(int index) {
+  /*    private void showStoryDialog(int index) {
         View view = getLayoutInflater().inflate(R.layout.dialog_view_story, null);
         AlertDialog.Builder dialogView = new AlertDialog.Builder(this, android.R.style.Theme_Black_NoTitleBar_Fullscreen);
         dialogView.setView(view);
@@ -114,8 +133,25 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
             }
+        } else if (tag.equalsIgnoreCase("grid")) {
+            for (int i = 0; i < loadJSONFromAsset().getHomePageLayout().size(); i++) {
+                if (loadJSONFromAsset().getHomePageLayout().get(i).getType().equalsIgnoreCase("grid")) {
+                    for (int j = 0; j < loadJSONFromAsset().getHomePageLayout().get(i).getData().size(); j++) {
+                        list.add(loadJSONFromAsset().getHomePageLayout().get(i).getData().get(j));
+                    }
+                }
+            }
         }
 
+        Log.v(TAG, "list size in loop: "+list.size());
         return list;
+    }
+
+    Datum getMoreVertical() {
+        Datum model = new Datum();
+
+        model.setMoreAvailable(true);
+
+        return model;
     }
 }

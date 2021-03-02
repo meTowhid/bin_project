@@ -1,6 +1,7 @@
 package com.nibri.binproject.adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,9 +10,10 @@ import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.nibri.binproject.R;
 import com.nibri.binproject.databinding.ItemServicelistBinding;
-import com.nibri.binproject.model.verticals.Datum;
+import com.nibri.binproject.model.response.Datum;
 
 import java.util.List;
 
@@ -21,10 +23,8 @@ public class ServiceListAdapter extends RecyclerView.Adapter<ServiceListAdapter.
     Context context;
     private static final String TAG = "ServiceListAdapter";
 
-    public ServiceListAdapter(List<Datum> serviceLists, Context context) {
+    public ServiceListAdapter(List<Datum> serviceLists) {
         this.serviceLists = serviceLists;
-        this.context = context;
-
     }
 
     @NonNull
@@ -36,6 +36,15 @@ public class ServiceListAdapter extends RecyclerView.Adapter<ServiceListAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+
+        Log.v(TAG, "ismore : "+serviceLists.get(position).isMoreAvailable());
+        if (serviceLists.get(position).isMoreAvailable()) {
+            holder.binding.AppCompatImageViewServiceMore.setVisibility(View.VISIBLE);
+        }
+
+       /* Glide.with(holder.itemView.getContext())
+                .load(serviceLists.get(position).getServiceIcon().getUrl())
+                .into(holder.binding.AppCompatImageViewService);*/
 
     }
 

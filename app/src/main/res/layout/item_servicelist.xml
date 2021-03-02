@@ -10,7 +10,6 @@
             android:id="@+id/AppCompatImageViewService"
             android:layout_width="64dp"
             android:layout_height="66dp"
-            app:srcCompat="@drawable/ic_baseline_cloud"
             android:layout_marginBottom="5dp"
             android:adjustViewBounds="true"
             android:scaleType="fitCenter" />
