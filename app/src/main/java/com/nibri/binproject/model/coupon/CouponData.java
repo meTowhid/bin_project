@@ -20,6 +20,7 @@ public class CouponData {
     @SerializedName("action")
     private String action;
 
+
     public String getTitle() {
         return title;
     }

@@ -2,45 +2,58 @@ package com.nibri.binproject;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.gson.Gson;
+import com.nibri.binproject.adapters.HorizontalRecyclerAdapter;
+import com.nibri.binproject.adapters.StatisticsAdapter;
 import com.nibri.binproject.adapters.StoryRecyclerAdapter;
+import com.nibri.binproject.databinding.ActivityMainBinding;
+import com.nibri.binproject.model.response.Datum;
+import com.nibri.binproject.model.response.HomeConfig;
 import com.nibri.binproject.utils.HorizontalSpaceItemDecoration;
 import com.nibri.binproject.utils.Utils;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
+    private static final String TAG = "MainActivity";
+    ActivityMainBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         initRecyclerView();
+        initCouponView();
+        initMileStoneView();
+
+    }
+
+    private void initMileStoneView() {
+        binding.recyclerViewMileStone.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        binding.recyclerViewMileStone.setAdapter(new StatisticsAdapter(getData("milestone")));
+        binding.recyclerViewMileStone.addItemDecoration(new HorizontalSpaceItemDecoration(Utils.dpToPixel(this, 16)));
+    }
+
+    private void initCouponView() {
+
+        binding.recyclerViewCoupon.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        binding.recyclerViewCoupon.setAdapter(new HorizontalRecyclerAdapter(getData("coupon")));
+        binding.recyclerViewCoupon.addItemDecoration(new HorizontalSpaceItemDecoration(Utils.dpToPixel(this, 16)));
+
     }
 
     private void initRecyclerView() {
-        /*RecyclerView recyclerView = findViewById(R.id.recyclerView);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-        recyclerView.setLayoutManager(layoutManager);
-
-        List<CouponData> couponData = new ArrayList<>();
-        couponData.add(new CouponData("food", "৳100 Off", "On your first order with <font color=#ffffff><b>bKAsh</b></font> payment", "Bijoy21"));
-        couponData.add(new CouponData("bus", "25% Off", "On your first order with <font color=#ffffff><b>bKAsh</b></font> payment", "Bijoy21"));
-        couponData.add(new CouponData("lunch", "৳100 Off", "On your first order with <font color=#ffffff><b>bKAsh</b></font> payment", "Bijoy21"));
-        couponData.add(new CouponData("bus", "৳100 Off", "On your first order with <font color=#ffffff><b>bKAsh</b></font> payment", "Bijoy21"));
-        couponData.add(new CouponData("bus", "৳100 Off", "On your first order with <font color=#ffffff><b>bKAsh</b></font> payment", "Bijoy21"));
-
-        HorizontalRecyclerAdapter couponAdapter = new HorizontalRecyclerAdapter(couponData);
-        recyclerView.setAdapter(couponAdapter);
-        recyclerView.addItemDecoration(new HorizontalSpaceItemDecoration(Utils.dpToPixel(this, 16)));*/
-
-
-        RecyclerView recyclerView2 = findViewById(R.id.recyclerView2);
-        LinearLayoutManager layoutManager2 = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-        recyclerView2.setLayoutManager(layoutManager2);
-
+        binding.recyclerViewStories.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
 
         StoryRecyclerAdapter storyAdapter = new StoryRecyclerAdapter(DummyData.storyDataFromJson(), (index) -> {
             System.out.println("index: " + index);
@@ -48,8 +61,9 @@ public class MainActivity extends AppCompatActivity {
             intent.putExtra("itemIndex", index);
             startActivity(intent);
         });
-        recyclerView2.setAdapter(storyAdapter);
-        recyclerView2.addItemDecoration(new HorizontalSpaceItemDecoration(Utils.dpToPixel(this, 16)));
+        binding.recyclerViewStories.setAdapter(storyAdapter);
+        binding.recyclerViewStories.addItemDecoration(new HorizontalSpaceItemDecoration(Utils.dpToPixel(this, 16)));
+
     }
 
 /*    private void showStoryDialog(int index) {
@@ -63,4 +77,45 @@ public class MainActivity extends AppCompatActivity {
 
         setupViewPager(vp, index);
     }*/
+
+
+    /*LOADING LOCAL JSON*/
+    public HomeConfig loadJSONFromAsset() {
+        String json = null;
+        try {
+            InputStream is = this.getAssets().open("homeConfig.json");
+            int size = is.available();
+            byte[] buffer = new byte[size];
+            is.read(buffer);
+            is.close();
+            json = new String(buffer, "UTF-8");
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+        return new Gson().fromJson(json, HomeConfig.class);
+    }
+
+    List<Datum> getData(String tag) {
+        List<Datum> list = new ArrayList<>();
+        if (tag.equalsIgnoreCase("coupon")) {
+            for (int i = 0; i < loadJSONFromAsset().getHomePageLayout().size(); i++) {
+                if (loadJSONFromAsset().getHomePageLayout().get(i).getType().equalsIgnoreCase("coupon")) {
+                    for (int j = 0; j < loadJSONFromAsset().getHomePageLayout().get(i).getData().size(); j++) {
+                        list.add(loadJSONFromAsset().getHomePageLayout().get(i).getData().get(j));
+                    }
+                }
+            }
+        } else if (tag.equalsIgnoreCase("milestone")) {
+            for (int i = 0; i < loadJSONFromAsset().getHomePageLayout().size(); i++) {
+                if (loadJSONFromAsset().getHomePageLayout().get(i).getType().equalsIgnoreCase("milestone")) {
+                    for (int j = 0; j < loadJSONFromAsset().getHomePageLayout().get(i).getData().size(); j++) {
+                        list.add(loadJSONFromAsset().getHomePageLayout().get(i).getData().get(j));
+                    }
+                }
+            }
+        }
+
+        return list;
+    }
 }

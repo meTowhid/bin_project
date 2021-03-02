@@ -13,15 +13,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.nibri.binproject.R;
 import com.nibri.binproject.model.CouponData;
+import com.nibri.binproject.model.response.Datum;
 import com.nibri.binproject.utils.Utils;
 
 import java.util.List;
 
 public class HorizontalRecyclerAdapter extends RecyclerView.Adapter<HorizontalRecyclerAdapter.ViewHolderCoupon> {
 
-    private final List<CouponData> couponList;
+    private final List<Datum> couponList;
 
-    public HorizontalRecyclerAdapter(List<CouponData> couponList) {
+    public HorizontalRecyclerAdapter(List<Datum> couponList) {
         this.couponList = couponList;
     }
 
@@ -34,14 +35,18 @@ public class HorizontalRecyclerAdapter extends RecyclerView.Adapter<HorizontalRe
 
     @Override
     public void onBindViewHolder(final ViewHolderCoupon holder, final int position) {
-        CouponData c = couponList.get(position);
-        holder.serviceName.setText(c.service);
-        holder.title.setText(c.title);
-        Utils.setHtml(holder.info, c.info);
-        holder.code.setText(c.code.toUpperCase());
+        Datum c = couponList.get(position);
+        holder.code.setVisibility(c.getAction() == null ? View.GONE : View.VISIBLE);
+        holder.serviceName.setText(c.getVertical().getKey());
+        holder.title.setText(c.getTitle());
+        holder.info.setText(c.getDescription());
+        //Utils.setHtml(holder.info, c.info);
+        if (c.getAction() !=null) {
+            holder.code.setText(c.getAction().getCode().toUpperCase());
+        }
 
         setOnTapDrawable(holder.serviceName);
-        holder.code.setOnClickListener(v -> Utils.copyCode(holder.itemView.getContext(), c.code.toUpperCase()));
+        holder.code.setOnClickListener(v -> Utils.copyCode(holder.itemView.getContext(), c.getAction().getCode().toUpperCase()));
 
     }
 
