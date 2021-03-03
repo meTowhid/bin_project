@@ -1,5 +1,6 @@
 package com.nibri.binproject;
 
+import com.nibri.binproject.adapters.WeightWatchersCludAdapter;
 import com.nibri.binproject.model.response.ServiceUnavailableIcon;
 import com.nibri.binproject.model.response.ServiceIcon;
 
@@ -40,7 +41,14 @@ public class MainActivity extends AppCompatActivity {
         initCouponView();
         initMileStoneView();
         initServiceList();
+        initWatcher();
 
+    }
+
+    private void initWatcher() {
+        binding.recyclerViewWatcher.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        binding.recyclerViewWatcher.setAdapter(new WeightWatchersCludAdapter(getData("watcher_club")));
+        binding.recyclerViewWatcher.addItemDecoration(new HorizontalSpaceItemDecoration(Utils.dpToPixel(this, 16)));
     }
 
     private void initServiceList() {
@@ -122,15 +130,14 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
             }
-        } else if (tag.equalsIgnoreCase("grid")) {
-            /*for (int i = 0; i < loadJSONFromAsset().getHomePageLayout().size(); i++) {
-                if (loadJSONFromAsset().getHomePageLayout().get(i).getType().equalsIgnoreCase("grid")) {
+        } else if (tag.equalsIgnoreCase("watcher_club")) {
+            for (int i = 0; i < loadJSONFromAsset().getHomePageLayout().size(); i++) {
+                if (loadJSONFromAsset().getHomePageLayout().get(i).getType().equalsIgnoreCase("watcher_club")) {
                     for (int j = 0; j < loadJSONFromAsset().getHomePageLayout().get(i).getData().size(); j++) {
                         list.add(loadJSONFromAsset().getHomePageLayout().get(i).getData().get(j));
-                        Log.v(TAG, "data: " + loadJSONFromAsset().getHomePageLayout().get(i).getData().get(j));
                     }
                 }
-            }*/
+            }
             //getLessVertical();
         }
 

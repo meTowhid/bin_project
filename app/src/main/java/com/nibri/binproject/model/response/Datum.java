@@ -89,6 +89,13 @@ public class Datum {
     @Expose
     private Action action;
 
+    @SerializedName("isFreeDelivery")
+    @Expose
+    private Boolean isFreeDelivery;
+    @SerializedName("amount")
+    @Expose
+    private String amount;
+
 
     public Datum() {
     }
@@ -117,6 +124,21 @@ public class Datum {
         isExpanded = isExpanded;
     }
 
+    public Boolean getFreeDelivery() {
+        return isFreeDelivery;
+    }
+
+    public void setFreeDelivery(Boolean freeDelivery) {
+        isFreeDelivery = freeDelivery;
+    }
+
+    public String getAmount() {
+        return amount;
+    }
+
+    public void setAmount(String amount) {
+        this.amount = amount;
+    }
 
     public String getTitle() {
         return title;

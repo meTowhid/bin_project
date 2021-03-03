@@ -39,7 +39,7 @@ public class ServiceListAdapter extends RecyclerView.Adapter<ServiceListAdapter.
 
 
         Log.v(TAG, "ICON: " + serviceLists.get(position).getServiceIcon().getUrl());
-        if (serviceLists.get(position).isMoreAvailable()) {
+        if (serviceLists.get(position).isExpanded()) {
             holder.binding.AppCompatImageViewServiceMore.setVisibility(View.VISIBLE);
         }
 
