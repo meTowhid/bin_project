@@ -7,6 +7,7 @@ import com.nibri.binproject.model.response.ServiceIcon;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
@@ -28,10 +29,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements CallBack {
     private static final String TAG = "MainActivity";
     ActivityMainBinding binding;
+    ServiceListAdapter adapter;
+    int count;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
         initMileStoneView();
         initServiceList();
         initWatcher();
+        getTotalVerticals();
 
     }
 
@@ -52,17 +57,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initServiceList() {
+        count = getTotalVerticals().size();
 
-        Log.v(TAG, "list size : " + getVerticalWithMore().size());
-        List<Datum> list;
-        list = getVerticalWithMore();
-        if (getVerticalWithMore().size() > 7) {
-            //list.remove(8);
+        if (getTotalVerticals().size() > 8) {
+            getVerticalsWithMore(6, getTotalVerticals());
+            binding.recyclerViewServiceList.setLayoutManager(new GridLayoutManager(this, 4));
+            adapter = new ServiceListAdapter(getVerticalsWithMore(6, getTotalVerticals()), this);
+            binding.recyclerViewServiceList.setAdapter(adapter);
+        } else {
+            binding.recyclerViewServiceList.setLayoutManager(new GridLayoutManager(this, 4));
+            binding.recyclerViewServiceList.setAdapter(new ServiceListAdapter(getTotalVerticals(), this));
         }
-
-
-        binding.recyclerViewServiceList.setLayoutManager(new GridLayoutManager(this, 4));
-        binding.recyclerViewServiceList.setAdapter(new ServiceListAdapter(list));
     }
 
 
@@ -145,7 +150,7 @@ public class MainActivity extends AppCompatActivity {
         return list;
     }
 
-    List<Datum> getVerticalWithMore() {
+    List<Datum> getTotalVerticals() {
         List<Datum> list = new ArrayList<>();
 
         for (int i = 0; i < loadJSONFromAsset().getHomePageLayout().size(); i++) {
@@ -161,11 +166,54 @@ public class MainActivity extends AppCompatActivity {
                             loadJSONFromAsset().getHomePageLayout().get(i).getData().get(j).getServiceURL(),
                             new ServiceIcon(loadJSONFromAsset().getHomePageLayout().get(i).getData().get(j).getServiceIcon().getUrl()),
                             new ServiceUnavailableIcon(loadJSONFromAsset().getHomePageLayout().get(i).getData().get(j).getServiceUnavailableIcon().getUrl()),
-                            loadJSONFromAsset().getHomePageLayout().get(i).getData().get(j).getServiceUnavailableMsg(),
-                            false));
+                            loadJSONFromAsset().getHomePageLayout().get(i).getData().get(j).getServiceUnavailableMsg()));
                 }
             }
         }
         return list;
+    }
+
+    List<Datum> getVerticalsWithMore(int count, List<Datum> totalVerticals) {
+        List<Datum> list = new ArrayList<>();
+        for (int j = 0; j <= count; j++) {
+            list.add(new Datum(
+                    totalVerticals.get(j).getServiceName(),
+                    totalVerticals.get(j).getIsServiceAvailable(),
+                    totalVerticals.get(j).getServiceType(),
+                    totalVerticals.get(j).getServiceHTTPHeader(),
+                    totalVerticals.get(j).getIsAuthRequired(),
+                    totalVerticals.get(j).getServiceScope(),
+                    totalVerticals.get(j).getServiceURL(),
+                    new ServiceIcon(totalVerticals.get(j).getServiceIcon().getUrl()),
+                    new ServiceUnavailableIcon(totalVerticals.get(j).getServiceUnavailableIcon().getUrl()),
+                    totalVerticals.get(j).getServiceUnavailableMsg(), false));
+
+            Log.v(TAG, "In Loop :" + j);
+        }
+
+        list.add(new Datum(
+                "",
+                true,
+                "",
+                "",
+                false,
+                "",
+                "",
+                new ServiceIcon("100"),
+                new ServiceUnavailableIcon(""),
+                "",
+                true));
+
+
+        return list;
+    }
+
+    @Override
+    public void requestingNewList() {
+
+        adapter = new ServiceListAdapter(getTotalVerticals(), this);
+        binding.recyclerViewServiceList.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+
     }
 }

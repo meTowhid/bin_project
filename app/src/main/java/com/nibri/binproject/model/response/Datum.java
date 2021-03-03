@@ -100,7 +100,7 @@ public class Datum {
     public Datum() {
     }
 
-    public Datum(String serviceName, Boolean isServiceAvailable, String serviceType, String serviceHTTPHeader, Boolean isAuthRequired, String serviceScope, String serviceURL, ServiceIcon serviceIcon, ServiceUnavailableIcon serviceUnavailableIcon, String serviceUnavailableMsg, boolean isMoreAvailable) {
+    public Datum(String serviceName, Boolean isServiceAvailable, String serviceType, String serviceHTTPHeader, Boolean isAuthRequired, String serviceScope, String serviceURL, ServiceIcon serviceIcon, ServiceUnavailableIcon serviceUnavailableIcon, String serviceUnavailableMsg, boolean isExpanded) {
         this.serviceName = serviceName;
         this.isServiceAvailable = isServiceAvailable;
         this.serviceType = serviceType;
@@ -111,7 +111,20 @@ public class Datum {
         this.serviceIcon = serviceIcon;
         this.serviceUnavailableIcon = serviceUnavailableIcon;
         this.serviceUnavailableMsg = serviceUnavailableMsg;
-        this.isExpanded = isMoreAvailable;
+        this.isExpanded = isExpanded;
+    }
+    public Datum(String serviceName, Boolean isServiceAvailable, String serviceType, String serviceHTTPHeader, Boolean isAuthRequired, String serviceScope, String serviceURL, ServiceIcon serviceIcon, ServiceUnavailableIcon serviceUnavailableIcon, String serviceUnavailableMsg) {
+        this.serviceName = serviceName;
+        this.isServiceAvailable = isServiceAvailable;
+        this.serviceType = serviceType;
+        this.serviceHTTPHeader = serviceHTTPHeader;
+        this.isAuthRequired = isAuthRequired;
+        this.serviceScope = serviceScope;
+        this.serviceURL = serviceURL;
+        this.serviceIcon = serviceIcon;
+        this.serviceUnavailableIcon = serviceUnavailableIcon;
+        this.serviceUnavailableMsg = serviceUnavailableMsg;
+
     }
 
     private boolean isExpanded = false;

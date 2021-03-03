@@ -23,15 +23,5 @@
             android:scaleType="centerInside"
             android:visibility="gone"
             app:srcCompat="@drawable/ic_more" />
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/AppCompatImageViewServiceLess"
-            android:layout_width="64dp"
-            android:layout_height="66dp"
-            android:layout_marginBottom="5dp"
-            android:adjustViewBounds="true"
-            android:scaleType="centerInside"
-            android:visibility="gone"
-            app:srcCompat="@drawable/ic_less" />
     </RelativeLayout>
 </layout>

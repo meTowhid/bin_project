@@ -176,6 +176,22 @@
             "url": "https://stgcmsstrapi.blob.core.windows.net/strapi-uploads/assets/8_i_u_e_adac79b11f.png"
           },
           "serviceUnavailableMsg": "For your safety, Donation service will be unavailable until further notice."
+        },
+        {
+          "serviceName": "Rental",
+          "isServiceAvailable": true,
+          "serviceType": "rental",
+          "serviceHTTPHeader": "200",
+          "isAuthRequired": true,
+          "serviceScope": "pwa",
+          "serviceURL": "https://drentalpwa.shohoz.com",
+          "serviceIcon": {
+            "url": "https://stgcmsstrapi.blob.core.windows.net/strapi-uploads/assets/8_i_e_1536d4bbf9.png"
+          },
+          "serviceUnavailableIcon": {
+            "url": "https://stgcmsstrapi.blob.core.windows.net/strapi-uploads/assets/8_i_u_e_adac79b11f.png"
+          },
+          "serviceUnavailableMsg": "For your safety, Donation service will be unavailable until further notice."
         }
       ]
     },
