@@ -162,6 +162,22 @@
                     "serviceUnavailableMsg":"ServiceUnavailableMsg"
                 },
                 {
+                    "serviceName":"Test",
+                    "isServiceAvailable":true,
+                    "serviceType":"Test",
+                    "serviceHTTPHeader":"200",
+                    "isAuthRequired":true,
+                    "serviceScope":"web",
+                    "serviceURL":"https://rdonationpwa.shohoz.com",
+                    "serviceIcon":{
+                        "url":"https://stgcmsstrapi.blob.core.windows.net/strapi-uploads/assets/7_i_e_bb30601493.png"
+                    },
+                    "serviceUnavailableIcon":{
+                        "url":"https://stgcmsstrapi.blob.core.windows.net/strapi-uploads/assets/7_i_u_e_ac207faa04.png"
+                    },
+                    "serviceUnavailableMsg":"ServiceUnavailableMsg"
+                },
+                {
                     "serviceName":"Rental",
                     "isServiceAvailable":true,
                     "serviceType":"rental",

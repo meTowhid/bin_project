@@ -10,6 +10,13 @@ public class ServiceIcon {
     @Expose
     private String url;
 
+    public ServiceIcon() {
+    }
+
+    public ServiceIcon(String url) {
+        this.url = url;
+    }
+
     public String getUrl() {
         return url;
     }
@@ -17,6 +24,8 @@ public class ServiceIcon {
     public void setUrl(String url) {
         this.url = url;
     }
+
+
 
     @Override
     public String toString() {

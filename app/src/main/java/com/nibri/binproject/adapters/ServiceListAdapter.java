@@ -37,14 +37,15 @@ public class ServiceListAdapter extends RecyclerView.Adapter<ServiceListAdapter.
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
-        Log.v(TAG, "ismore : "+serviceLists.get(position).isMoreAvailable());
+
+        Log.v(TAG, "ICON: " + serviceLists.get(position).getServiceIcon().getUrl());
         if (serviceLists.get(position).isMoreAvailable()) {
             holder.binding.AppCompatImageViewServiceMore.setVisibility(View.VISIBLE);
         }
 
-       /* Glide.with(holder.itemView.getContext())
+        Glide.with(holder.itemView.getContext())
                 .load(serviceLists.get(position).getServiceIcon().getUrl())
-                .into(holder.binding.AppCompatImageViewService);*/
+                .into(holder.binding.AppCompatImageViewService);
 
     }
 

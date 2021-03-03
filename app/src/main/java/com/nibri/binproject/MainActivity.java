@@ -1,5 +1,8 @@
 package com.nibri.binproject;
 
+import com.nibri.binproject.model.response.ServiceUnavailableIcon;
+import com.nibri.binproject.model.response.ServiceIcon;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -42,18 +45,16 @@ public class MainActivity extends AppCompatActivity {
 
     private void initServiceList() {
 
+        Log.v(TAG, "list size : " + getVerticalWithMore().size());
         List<Datum> list;
-        list = getData("grid");
-
-        if (list.size() >= 6) {
-            list.add(getMoreVertical());
+        list = getVerticalWithMore();
+        if (getVerticalWithMore().size() > 7) {
+            //list.remove(8);
         }
 
-        Log.v(TAG, "list size : "+list.size());
 
-
-        binding.recyclerViewMileStone.setLayoutManager(new GridLayoutManager(this, 4));
-        binding.recyclerViewMileStone.setAdapter(new ServiceListAdapter(list));
+        binding.recyclerViewServiceList.setLayoutManager(new GridLayoutManager(this, 4));
+        binding.recyclerViewServiceList.setAdapter(new ServiceListAdapter(list));
     }
 
 
@@ -84,18 +85,6 @@ public class MainActivity extends AppCompatActivity {
         binding.recyclerViewStories.addItemDecoration(new HorizontalSpaceItemDecoration(Utils.dpToPixel(this, 16)));
 
     }
-
-  /*    private void showStoryDialog(int index) {
-        View view = getLayoutInflater().inflate(R.layout.dialog_view_story, null);
-        AlertDialog.Builder dialogView = new AlertDialog.Builder(this, android.R.style.Theme_Black_NoTitleBar_Fullscreen);
-        dialogView.setView(view);
-
-        ViewPager vp = view.findViewById(R.id.viewpager);
-
-        dialogView.create().show();
-
-        setupViewPager(vp, index);
-    }*/
 
 
     /*LOADING LOCAL JSON*/
@@ -134,24 +123,42 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         } else if (tag.equalsIgnoreCase("grid")) {
-            for (int i = 0; i < loadJSONFromAsset().getHomePageLayout().size(); i++) {
+            /*for (int i = 0; i < loadJSONFromAsset().getHomePageLayout().size(); i++) {
                 if (loadJSONFromAsset().getHomePageLayout().get(i).getType().equalsIgnoreCase("grid")) {
                     for (int j = 0; j < loadJSONFromAsset().getHomePageLayout().get(i).getData().size(); j++) {
                         list.add(loadJSONFromAsset().getHomePageLayout().get(i).getData().get(j));
+                        Log.v(TAG, "data: " + loadJSONFromAsset().getHomePageLayout().get(i).getData().get(j));
                     }
                 }
-            }
+            }*/
+            //getLessVertical();
         }
 
-        Log.v(TAG, "list size in loop: "+list.size());
+        Log.v(TAG, "list size in loop: " + list.size());
         return list;
     }
 
-    Datum getMoreVertical() {
-        Datum model = new Datum();
+    List<Datum> getVerticalWithMore() {
+        List<Datum> list = new ArrayList<>();
 
-        model.setMoreAvailable(true);
-
-        return model;
+        for (int i = 0; i < loadJSONFromAsset().getHomePageLayout().size(); i++) {
+            if (loadJSONFromAsset().getHomePageLayout().get(i).getType().equalsIgnoreCase("grid")) {
+                for (int j = 0; j < loadJSONFromAsset().getHomePageLayout().get(i).getData().size(); j++) {
+                    list.add(new Datum(
+                            loadJSONFromAsset().getHomePageLayout().get(i).getData().get(j).getServiceName(),
+                            loadJSONFromAsset().getHomePageLayout().get(i).getData().get(j).getIsServiceAvailable(),
+                            loadJSONFromAsset().getHomePageLayout().get(i).getData().get(j).getServiceType(),
+                            loadJSONFromAsset().getHomePageLayout().get(i).getData().get(j).getServiceHTTPHeader(),
+                            loadJSONFromAsset().getHomePageLayout().get(i).getData().get(j).getIsAuthRequired(),
+                            loadJSONFromAsset().getHomePageLayout().get(i).getData().get(j).getServiceScope(),
+                            loadJSONFromAsset().getHomePageLayout().get(i).getData().get(j).getServiceURL(),
+                            new ServiceIcon(loadJSONFromAsset().getHomePageLayout().get(i).getData().get(j).getServiceIcon().getUrl()),
+                            new ServiceUnavailableIcon(loadJSONFromAsset().getHomePageLayout().get(i).getData().get(j).getServiceUnavailableIcon().getUrl()),
+                            loadJSONFromAsset().getHomePageLayout().get(i).getData().get(j).getServiceUnavailableMsg(),
+                            false));
+                }
+            }
+        }
+        return list;
     }
 }

@@ -18,6 +18,10 @@ public class ServiceUnavailableIcon {
         this.url = url;
     }
 
+    public ServiceUnavailableIcon(String url) {
+        this.url = url;
+    }
+
     @Override
     public String toString() {
         return "ServiceUnavailableIcon{" +

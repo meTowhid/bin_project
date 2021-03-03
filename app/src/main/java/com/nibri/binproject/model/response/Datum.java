@@ -90,14 +90,31 @@ public class Datum {
     private Action action;
 
 
-    private boolean isMoreAvailable = false;
-
-    public boolean isMoreAvailable() {
-        return isMoreAvailable;
+    public Datum() {
     }
 
-    public void setMoreAvailable(boolean moreAvailable) {
-        isMoreAvailable = moreAvailable;
+    public Datum(String serviceName, Boolean isServiceAvailable, String serviceType, String serviceHTTPHeader, Boolean isAuthRequired, String serviceScope, String serviceURL, ServiceIcon serviceIcon, ServiceUnavailableIcon serviceUnavailableIcon, String serviceUnavailableMsg, boolean isMoreAvailable) {
+        this.serviceName = serviceName;
+        this.isServiceAvailable = isServiceAvailable;
+        this.serviceType = serviceType;
+        this.serviceHTTPHeader = serviceHTTPHeader;
+        this.isAuthRequired = isAuthRequired;
+        this.serviceScope = serviceScope;
+        this.serviceURL = serviceURL;
+        this.serviceIcon = serviceIcon;
+        this.serviceUnavailableIcon = serviceUnavailableIcon;
+        this.serviceUnavailableMsg = serviceUnavailableMsg;
+        this.isExpanded = isMoreAvailable;
+    }
+
+    private boolean isExpanded = false;
+
+    public boolean isExpanded() {
+        return isExpanded;
+    }
+
+    public void setIsExpanded(boolean isExpanded) {
+        isExpanded = isExpanded;
     }
 
 
