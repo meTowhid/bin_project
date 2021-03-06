@@ -1,27 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/AppCompatImageViewService"
-            android:layout_width="64dp"
-            android:layout_height="66dp"
-            android:layout_marginBottom="5dp"
-            android:adjustViewBounds="true"
-            android:scaleType="fitCenter" />
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/AppCompatImageViewServiceMore"
-            android:layout_width="64dp"
-            android:layout_height="66dp"
-            android:layout_marginBottom="5dp"
-            android:adjustViewBounds="true"
-            android:scaleType="centerInside"
-            android:visibility="gone"
-            app:srcCompat="@drawable/ic_more" />
-    </RelativeLayout>
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_icon"
+        android:layout_width="64dp"
+        android:layout_height="66dp"
+        android:layout_marginBottom="5dp"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
+        tools:srcCompat="@drawable/ic_more" />
 </layout>

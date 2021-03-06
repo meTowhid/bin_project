@@ -31,7 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class MainActivity extends AppCompatActivity implements CallBack {
+public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     ActivityMainBinding binding;
     ServiceListAdapter adapter;
@@ -57,17 +57,8 @@ public class MainActivity extends AppCompatActivity implements CallBack {
     }
 
     private void initServiceList() {
-        count = getTotalVerticals().size();
-
-        if (getTotalVerticals().size() > 8) {
-            getVerticalsWithMore(6, getTotalVerticals());
             binding.recyclerViewServiceList.setLayoutManager(new GridLayoutManager(this, 4));
-            adapter = new ServiceListAdapter(getVerticalsWithMore(6, getTotalVerticals()), this);
-            binding.recyclerViewServiceList.setAdapter(adapter);
-        } else {
-            binding.recyclerViewServiceList.setLayoutManager(new GridLayoutManager(this, 4));
-            binding.recyclerViewServiceList.setAdapter(new ServiceListAdapter(getTotalVerticals(), this));
-        }
+            binding.recyclerViewServiceList.setAdapter(new ServiceListAdapter(getTotalVerticals()));
     }
 
 
@@ -206,14 +197,5 @@ public class MainActivity extends AppCompatActivity implements CallBack {
 
 
         return list;
-    }
-
-    @Override
-    public void requestingNewList() {
-
-        adapter = new ServiceListAdapter(getTotalVerticals(), this);
-        binding.recyclerViewServiceList.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
-
     }
 }
