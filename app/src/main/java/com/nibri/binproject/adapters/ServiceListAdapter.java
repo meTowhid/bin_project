@@ -57,7 +57,7 @@ public class ServiceListAdapter extends RecyclerView.Adapter<ServiceListAdapter.
                 // shrink list here
                 System.out.println("shrinking");
                 isExpanded = false;
-                notifyItemRangeChanged(7, 3);
+                notifyItemRangeChanged(7, serviceLists.size() + 1 - 7);
             } else {
                 // default callback here
             }
