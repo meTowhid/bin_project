@@ -17,10 +17,13 @@ import java.util.List;
 public class ServiceListAdapter extends RecyclerView.Adapter<ServiceListAdapter.ViewHolder> {
     private final boolean enableExpandedFeature;
     private boolean isExpanded = false;
+    private final int blocCount, expandItemPosition;
     List<Datum> serviceLists;
 
-    public ServiceListAdapter(List<Datum> serviceLists) {
-        this.enableExpandedFeature = serviceLists.size() > 8;
+    public ServiceListAdapter(List<Datum> serviceLists, int row, int column) {
+        this.blocCount = row * column;
+        this.expandItemPosition = blocCount - 1;
+        this.enableExpandedFeature = serviceLists.size() > blocCount;
         this.serviceLists = serviceLists;
     }
 
@@ -33,7 +36,7 @@ public class ServiceListAdapter extends RecyclerView.Adapter<ServiceListAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        if (enableExpandedFeature && !isExpanded && position == 7) {
+        if (enableExpandedFeature && !isExpanded && position == expandItemPosition) {
             Glide.with(holder.itemView.getContext())
                     .load(R.drawable.ic_more)
                     .into(holder.binding.ivIcon);
@@ -48,16 +51,16 @@ public class ServiceListAdapter extends RecyclerView.Adapter<ServiceListAdapter.
         }
 
         holder.binding.ivIcon.setOnClickListener(v -> {
-            if (enableExpandedFeature && (position == 7) && !isExpanded) {
+            if (enableExpandedFeature && (position == expandItemPosition) && !isExpanded) {
                 // expand list here
                 System.out.println("expanding");
                 isExpanded = true;
-                notifyItemChanged(7);
+                notifyItemChanged(expandItemPosition);
             } else if (enableExpandedFeature && position == serviceLists.size() && isExpanded) {
                 // shrink list here
                 System.out.println("shrinking");
                 isExpanded = false;
-                notifyItemRangeChanged(7, serviceLists.size() + 1 - 7);
+                notifyItemRangeChanged(expandItemPosition, serviceLists.size() + 1 - expandItemPosition);
             } else {
                 // default callback here
             }
@@ -66,7 +69,7 @@ public class ServiceListAdapter extends RecyclerView.Adapter<ServiceListAdapter.
 
     @Override
     public int getItemCount() {
-        return enableExpandedFeature ? (isExpanded ? (serviceLists.size() + 1) : 8) : serviceLists.size();
+        return enableExpandedFeature ? (isExpanded ? (serviceLists.size() + 1) : blocCount) : serviceLists.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

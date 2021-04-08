@@ -1,13 +1,9 @@
 package com.nibri.binproject;
 
-import com.nibri.binproject.adapters.WeightWatchersCludAdapter;
-import com.nibri.binproject.model.response.ServiceUnavailableIcon;
-import com.nibri.binproject.model.response.ServiceIcon;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Toast;
+import android.widget.SeekBar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
@@ -19,9 +15,12 @@ import com.nibri.binproject.adapters.HorizontalRecyclerAdapter;
 import com.nibri.binproject.adapters.ServiceListAdapter;
 import com.nibri.binproject.adapters.StatisticsAdapter;
 import com.nibri.binproject.adapters.StoryRecyclerAdapter;
+import com.nibri.binproject.adapters.WeightWatchersCludAdapter;
 import com.nibri.binproject.databinding.ActivityMainBinding;
 import com.nibri.binproject.model.response.Datum;
 import com.nibri.binproject.model.response.HomeConfig;
+import com.nibri.binproject.model.response.ServiceIcon;
+import com.nibri.binproject.model.response.ServiceUnavailableIcon;
 import com.nibri.binproject.utils.HorizontalSpaceItemDecoration;
 import com.nibri.binproject.utils.Utils;
 
@@ -29,13 +28,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     ActivityMainBinding binding;
     ServiceListAdapter adapter;
-    int count;
+    int row = 2, column = 4;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +46,43 @@ public class MainActivity extends AppCompatActivity {
         initWatcher();
         getTotalVerticals();
 
+
+        binding.seekBarRow.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                row = progress;
+                initServiceList();
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+        binding.seekBarColumn.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                column = progress;
+                initServiceList();
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
     }
 
     private void initWatcher() {
@@ -57,8 +92,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initServiceList() {
-            binding.recyclerViewServiceList.setLayoutManager(new GridLayoutManager(this, 4));
-            binding.recyclerViewServiceList.setAdapter(new ServiceListAdapter(getTotalVerticals()));
+        List<Datum> data = getTotalVerticals();
+        data.addAll(data);
+        binding.recyclerViewServiceList.setLayoutManager(new GridLayoutManager(this, column));
+        binding.recyclerViewServiceList.setAdapter(new ServiceListAdapter(data, row, column));
     }
 
 
