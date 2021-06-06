@@ -11,6 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.BinProject">
+        <activity android:name=".VideoPlayerActivity"></activity>
         <activity
             android:name=".StoryActivity"
             android:theme="@style/Theme.BinProject.NoActionBar" />

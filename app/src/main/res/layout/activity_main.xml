@@ -17,6 +17,14 @@
                 android:orientation="vertical"
                 tools:context=".MainActivity">
 
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/testvideo"
+                    android:layout_margin="10dp"
+                    android:layout_gravity="center"
+                    android:text="Click Me"/>
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerViewServiceList"
                     android:layout_width="match_parent"

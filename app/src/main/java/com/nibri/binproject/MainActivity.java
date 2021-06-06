@@ -83,6 +83,10 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
+        binding.testvideo.setOnClickListener(v -> {
+            startActivity(new Intent(this, VideoPlayerActivity.class));
+        });
     }
 
     private void initWatcher() {
