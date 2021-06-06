@@ -11,10 +11,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.BinProject">
+<!--        <activity android:name=".ExoPlayerActivity"></activity>-->
         <activity
             android:name=".StoryActivity"
             android:theme="@style/Theme.BinProject.NoActionBar" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".ExoPlayerActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
